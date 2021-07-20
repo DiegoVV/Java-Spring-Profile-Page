@@ -1,18 +1,21 @@
 package com.example.profile.user;
 
-import java.time.LocalDate;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import java.util.List;
 
+@Service
 public class UserService {
+
+    private final UserRepository userRepository;
+
+    @Autowired
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+
     public List<User> getUsers() {
-        return List.of(
-                new User(
-                        26,
-                        LocalDate.of(1995, 5, 19),
-                        "email@gmail.mail",
-                        1L,
-                        "Diego"
-                )
-        );
+        return userRepository.findAll();
     }
 }
