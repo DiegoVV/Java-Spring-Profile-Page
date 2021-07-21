@@ -14,21 +14,21 @@ public class UserConfig {
     CommandLineRunner commandLineRunner(UserRepository repository) {
         return args -> {
             User diego = new User(
-                    "Rua tal 555, ap 99",
-                    LocalDate.of(1995, 5, 19),
-                    "email@gmail.mail",
                     "Diego Velasco",
-                    "password",
-                    "55 51 912345678"
+                    "email@gmail.mail",
+                    LocalDate.of(1995, 5, 19),
+                    "Porto Alegre",
+                    "55 51 912345678",
+                    "password"
             );
 
             User edna = new User(
-                    "Rua tal 545, ap 99",
-                    LocalDate.of(1993, 2, 9),
-                    "email2@gmail.mail",
                     "Edna Hernandez",
-                    "password",
-                    "55 51 922345678"
+                    "email2@gmail.mail",
+                    LocalDate.of(1993, 2, 9),
+                    "Honduras",
+                    "55 51 922345678",
+                    "password"
             );
 
             repository.saveAll(

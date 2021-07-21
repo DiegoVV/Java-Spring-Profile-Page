@@ -23,39 +23,39 @@ public class User {
     @Transient
     private Integer age;
     private LocalDate birthday;
+    private String city;
     private String phone;
-    private String address;
     private String password;
 
     public User() {
 
     }
 
-    public User(Long id, String address, LocalDate birthday, String email, String name, String password, String phone) {
+    public User(Long id, String name, String email, LocalDate birthday, String city, String phone, String password) {
         this.id = id;
-        this.address = address;
-        this.birthday = birthday;
-        this.email = email;
         this.name = name;
-        this.password = password;
-        this.phone = phone;
-    }
-
-    public User(String address, LocalDate birthday, String email, String name, String password, String phone) {
-        this.address = address;
-        this.birthday = birthday;
         this.email = email;
-        this.name = name;
-        this.password = password;
+        this.birthday = birthday;
+        this.city = city;
         this.phone = phone;
+        this.password = password;
     }
 
-    public String getAddress() {
-        return address;
+    public User(String name, String email, LocalDate birthday, String city, String phone, String password) {
+        this.name = name;
+        this.email = email;
+        this.birthday = birthday;
+        this.city = city;
+        this.phone = phone;
+        this.password = password;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
     }
 
     public Integer getAge() {
