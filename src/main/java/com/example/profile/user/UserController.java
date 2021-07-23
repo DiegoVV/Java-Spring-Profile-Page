@@ -1,10 +1,12 @@
 package com.example.profile.user;
 
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping(path = "api/v1/user")
 public class UserController {
@@ -22,7 +24,12 @@ public class UserController {
     }
 
     @PostMapping
-    public void addUser(@RequestBody User user) {
-        userService.addUser(user);
+    public User addUser(@RequestBody User user) {
+        return userService.addUser(user);
+    }
+
+    @GetMapping("/hello")
+    public String hello(@RequestParam(name = "name", defaultValue = "World") String name) {
+        return String.format("Hello, %s", name);
     }
 }
