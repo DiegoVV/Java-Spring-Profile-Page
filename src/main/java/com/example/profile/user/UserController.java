@@ -1,7 +1,7 @@
 package com.example.profile.user;
 
-import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,6 +23,12 @@ public class UserController {
         return userService.getUsers();
     }
 
+    @GetMapping("/{id}")
+    public User getUser(@PathVariable("id") Long id) {
+//        return userService.getUsers().get(Math.toIntExact(id));
+        return userService.getUser(id);
+    }
+
     @PostMapping
     public User addUser(@RequestBody User user) {
         return userService.addUser(user);
@@ -31,5 +37,10 @@ public class UserController {
     @GetMapping("/hello")
     public String hello(@RequestParam(name = "name", defaultValue = "World") String name) {
         return String.format("Hello, %s", name);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<User> updateUser(@PathVariable("id") Long id, @RequestBody User userDetails) {
+        return userService.updateUser(id, userDetails);
     }
 }
