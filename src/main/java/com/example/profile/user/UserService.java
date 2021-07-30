@@ -38,9 +38,9 @@ public class UserService {
 
     public User addUser(User user) {
 //        boolean isValidEmail = emailValidator.test(user.getEmail());
-        if (!emailValidator.test(user.getEmail())) {
-            throw new IllegalStateException("invalid email");
-        }
+//        if (!emailValidator.test(user.getEmail())) {
+//            throw new IllegalStateException("invalid email");
+//        }
         return userRepository.save(user);
 //        System.out.println(user);
     }
