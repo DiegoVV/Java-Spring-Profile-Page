@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 //public class UserService implements UserDetailsService {
 @Service
@@ -55,8 +56,7 @@ public class PhoneService {
 
     public List<Phone> getUserPhones(Long userId) {
         List<Phone> phones = phoneRepository.findAll();
-        
-        return phoneRepository.save(phone);
+        return phones.stream().filter(phone -> (userId == (phone.getUser() == null ? null : phone.getUser().getId()))).collect(Collectors.toList());
     }
 
     public ResponseEntity<Map<String, Boolean>> deletePhone(Long id){
