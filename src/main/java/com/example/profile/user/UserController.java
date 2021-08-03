@@ -30,6 +30,12 @@ public class UserController {
         return userService.getUser(id);
     }
 
+    @GetMapping("/{email}/{password}")
+    public Long validateUser(@PathVariable("email") String email, @PathVariable("password") String password) {
+//        return userService.getUsers().get(Math.toIntExact(id));
+        return userService.validateUser(email, password);
+    }
+
     @PostMapping
     public User addUser(@RequestBody User user) {
         return userService.addUser(user);

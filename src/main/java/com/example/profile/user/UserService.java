@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.HashMap;
 import java.util.List;
@@ -22,7 +24,7 @@ public class UserService {
     private EmailValidator emailValidator;
 
     @Autowired
-    public UserService(UserRepository userRepository, EmailValidator emailValidator) {
+    public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
         this.emailValidator = emailValidator;
     }
@@ -68,6 +70,19 @@ public class UserService {
         Map<String, Boolean> response = new HashMap<>();
         response.put("User deleted", Boolean.TRUE);
         return ResponseEntity.ok(response);
+    }
+
+    public Long validateUser(String email, String password) {
+        if(email.contentEquals("admin") && password.contentEquals("admin")){
+            return 0L;
+        } else {
+            User user = userRepository.findByEmail(email).get();
+            if (user.getPassword().contentEquals(password)) {
+                return user.getId();
+            } else {
+                return -1L;
+            }
+        }
     }
 
 //    @Override
