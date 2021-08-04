@@ -8,10 +8,6 @@ class UserService {
         return axios.get(USER_API_BASE_URL);
     }
 
-    getUserPhones(id){
-        return axios.get(PHONE_API_BASE_URL + "/users/" + id);
-    }
-
     getUser(id){
         return axios.get(USER_API_BASE_URL + "/" + id);
     }
@@ -30,6 +26,19 @@ class UserService {
 
     loginUser(email, password){
         return axios.get(USER_API_BASE_URL + "/" + email + "/" + password);
+    }
+
+    getUserPhones(id){
+        return axios.get(PHONE_API_BASE_URL + "/users/" + id);
+    }
+
+    createPhone(phone){
+        return axios.post(PHONE_API_BASE_URL, phone);
+    }
+
+    addPhoneToUser(phoneId, userId){
+        return axios.put(PHONE_API_BASE_URL + "/" + phoneId + "/users/" + userId );
+
     }
 }
 

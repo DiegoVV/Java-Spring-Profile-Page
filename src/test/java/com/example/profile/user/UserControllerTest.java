@@ -9,10 +9,14 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.util.Assert;
 
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -34,6 +38,8 @@ public class UserControllerTest {
 //    }
 
     UserController userController;
+    @Autowired
+    UserRepository userRepository;
 
     @BeforeAll
     public static void setupAll() {
@@ -42,152 +48,7 @@ public class UserControllerTest {
 
     @BeforeEach
     public void setup() {
-        userController = new UserController(new UserService(new UserRepository() {
-            @Override
-            public Optional<User> findByEmail(String email) {
-                return Optional.empty();
-            }
-
-            @Override
-            public List<User> findAll() {
-                return null;
-            }
-
-            @Override
-            public List<User> findAll(Sort sort) {
-                return null;
-            }
-
-            @Override
-            public List<User> findAllById(Iterable<Long> iterable) {
-                return null;
-            }
-
-            @Override
-            public <S extends User> List<S> saveAll(Iterable<S> iterable) {
-                return null;
-            }
-
-            @Override
-            public void flush() {
-
-            }
-
-            @Override
-            public <S extends User> S saveAndFlush(S s) {
-                return null;
-            }
-
-            @Override
-            public <S extends User> List<S> saveAllAndFlush(Iterable<S> iterable) {
-                return null;
-            }
-
-            @Override
-            public void deleteAllInBatch(Iterable<User> iterable) {
-
-            }
-
-            @Override
-            public void deleteAllByIdInBatch(Iterable<Long> iterable) {
-
-            }
-
-            @Override
-            public void deleteAllInBatch() {
-
-            }
-
-            @Override
-            public User getOne(Long aLong) {
-                return null;
-            }
-
-            @Override
-            public User getById(Long aLong) {
-                return null;
-            }
-
-            @Override
-            public <S extends User> List<S> findAll(Example<S> example) {
-                return null;
-            }
-
-            @Override
-            public <S extends User> List<S> findAll(Example<S> example, Sort sort) {
-                return null;
-            }
-
-            @Override
-            public Page<User> findAll(Pageable pageable) {
-                return null;
-            }
-
-            @Override
-            public <S extends User> S save(S s) {
-                return null;
-            }
-
-            @Override
-            public Optional<User> findById(Long aLong) {
-                return Optional.empty();
-            }
-
-            @Override
-            public boolean existsById(Long aLong) {
-                return false;
-            }
-
-            @Override
-            public long count() {
-                return 0;
-            }
-
-            @Override
-            public void deleteById(Long aLong) {
-
-            }
-
-            @Override
-            public void delete(User user) {
-
-            }
-
-            @Override
-            public void deleteAllById(Iterable<? extends Long> iterable) {
-
-            }
-
-            @Override
-            public void deleteAll(Iterable<? extends User> iterable) {
-
-            }
-
-            @Override
-            public void deleteAll() {
-
-            }
-
-            @Override
-            public <S extends User> Optional<S> findOne(Example<S> example) {
-                return Optional.empty();
-            }
-
-            @Override
-            public <S extends User> Page<S> findAll(Example<S> example, Pageable pageable) {
-                return null;
-            }
-
-            @Override
-            public <S extends User> long count(Example<S> example) {
-                return 0;
-            }
-
-            @Override
-            public <S extends User> boolean exists(Example<S> example) {
-                return false;
-            }
-        }));
+        userController = new UserController(new UserService(userRepository));
 
     }
 
@@ -229,12 +90,19 @@ public class UserControllerTest {
     public void AuthenticateUserTest()
             throws JsonProcessingException {
 
+
         User user = new User(
                 "Postman",
                 "post@gmail.mail",
                 LocalDate.of(1993, 2, 9),
                 "Space",
                 "password");
+
+        System.out.println(userController.addUser(user));
+        userController.getUsers();
+//        Assert.isTrue(userController.validateUser("post@gmail.mail", "password") > 0L, "this should return true");
+
+//        assertThat(String.valueOf((userController.validateUser("post@gmail.mail", "password") > 0L)), true);
     }
 
     @Test

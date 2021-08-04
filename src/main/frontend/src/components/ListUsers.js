@@ -66,7 +66,7 @@ export default class ListUsers extends Component {
                                                 <td> {user.email} </td>
                                                 <td> {user.birthday} </td>
                                                 <td> {user.city} </td>
-                                                <td> {this.state.phones.map((phone,index) => (index === user.id ? phone ? (phone.map(number => <div>{number}</div>)): <div></div> : <div></div>))} </td>
+                                                <td> {this.state.phones.map((phone,index) => (index === user.id ? phone ? (phone.map(number => <div key={user.id + "-" + number} >{number}</div>)): <div key={index}></div> : <div key={index}></div>))} </td>
                                                 <td className="d-flex justify-content-around">                                            
                                                     <button className="btn btn-primary" onClick={() => this.editUser(user.id)}>Edit</button>
                                                     <button className="btn btn-danger" onClick={() => this.deleteUser(user.id)}>Delete</button>

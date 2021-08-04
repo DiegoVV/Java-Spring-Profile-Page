@@ -10,23 +10,49 @@ export default class CreateUser extends Component {
             email: "",
             birthday: "",
             city: "",
-            phone: "",
+            phones: [""],
             password: ""
         }
 
         this.changeInfoHandler = this.changeInfoHandler.bind(this);
+        this.changePhoneHandler = this.changePhoneHandler.bind(this);
         this.saveUser = this.saveUser.bind(this);
+        this.savePhone = this.savePhone.bind(this);
     }
 
     changeInfoHandler = (event) => {
         this.setState({[event.target.id]: event.target.value});
     }
 
+    changePhoneHandler = (event) => {
+        let phonesCopy = this.state.phones.slice();
+        phonesCopy[event.target.id] = event.target.value;
+        if(phonesCopy.length === parseInt(event.target.id) + 1){
+            phonesCopy.push("");
+        }
+        this.setState({phones: phonesCopy});
+    }
+
+    savePhone = (event) => {
+        event.preventDefault();
+        let phone = { phone: event.target.value};
+        UserService.createPhone(phone).then((resp) => {
+            console.log(resp.data);
+        });
+    }
+
     saveUser = (event) => {
         event.preventDefault();
         // console.log(JSON.stringify(this.state));
+        
+        let user = {name: this.state.name, email: this.state.email, birthday: this.state.birthday, city: this.state.city, password: this.state.password};
 
-        UserService.createUser(this.state).then((res) => {
+        UserService.createUser(user).then((res) => {
+            this.state.phones.map(phoneNumber => phoneNumber ? (UserService.createPhone({phone: phoneNumber}).then((resp) => {
+                UserService.addPhoneToUser(resp.data.id, res.data.id).then((respo)=> {
+                });
+            })) : null);
+
             this.props.history.push('/profile/' + res.data.id);
         });
     }
@@ -83,11 +109,12 @@ export default class CreateUser extends Component {
                                             Phone
                                         </label>
                                         <div className="cols-sm-10">
-                                            <div className="input-group">
+                                            <div>
                                                 {/* <span className="input-group-addon">
                                                     <i className="fa fa-envelope fa" aria-hidden="true"></i>
-                                                </span> */}
-                                                <input defaultValue={this.state.phone} type="text" className="form-control" name="phone" id="phone" placeholder="Enter your phone number" onBlur={this.changeInfoHandler} />
+                                                </span> 
+                                                <input defaultValue={this.state.phone} type="text" className="form-control" name="phone" id="phone" placeholder="Enter your phone number" onBlur={this.changeInfoHandler} />*/}
+                                                {this.state.phones.map((phone, index) => <input key={"phone"+index}  defaultValue={this.state.phones[index]} type="text" className="form-control mb-1" name={"phone"+index} id={index} placeholder="Enter your phone number" onBlur={this.changePhoneHandler} />)}
                                             </div>
                                         </div>
                                     </div>

@@ -21,12 +21,12 @@ public class UserService {
 
     private final static String USER_NOT_FOUND_MSG = "user not found";
     private final UserRepository userRepository;
-    private EmailValidator emailValidator;
+//    private EmailValidator emailValidator;
 
     @Autowired
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
-        this.emailValidator = emailValidator;
+//        this.emailValidator = emailValidator;
     }
 
     public List<User> getUsers() {
